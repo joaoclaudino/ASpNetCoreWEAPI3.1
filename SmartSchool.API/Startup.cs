@@ -31,7 +31,16 @@ namespace SmartSchool.API
                 context => context.UseSqlite( Configuration.GetConnectionString("Default"))
             );
 
-            services.AddControllers();
+            //services.AddSingleton<IRepository,Repository>();//CRIAR UMA UNICA INSTANCIA QUANDO PE SOLICITADO PELA PRIMEIRA VEZ E REUTILIZA QUANDO O SERVIÇO É NCESSÁRIO
+            //services.AddTransient<IRepository,Repository>();//SEMPRE VAI CRIAR UMA NOVA INSTANCIA PARA CADE ITEM ENCONTRANDO QUE POSSUA A DEPENDENNCIA, SE TIVER 5 DEPENTENDE IRA GERAR 5 INSTANCIAS
+            
+            services.AddScoped<IRepository,Repository>();//REAPROVEITA A DEPENDENCIA, A CADE REQUISIÇÃO DO CONTROLE CRIA UMA NOVA
+            
+            services.AddControllers()
+                .AddNewtonsoftJson(
+                    opt => opt.SerializerSettings.ReferenceLoopHandling = 
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
