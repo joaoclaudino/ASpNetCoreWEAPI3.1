@@ -4,13 +4,14 @@ using SmartSchool.API.Models;
 using System.Linq;
 using SmartSchool.API.Data;
 using Microsoft.EntityFrameworkCore;
-using SmartSchool.API.Dtos;
+using SmartSchool.API.V2.Dtos;
 using AutoMapper;
 
-namespace SmartSchool.API.Controllers
+namespace SmartSchool.API.V2.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AlunoController : ControllerBase
     {
         //private readonly DataContext _context;
@@ -29,28 +30,7 @@ namespace SmartSchool.API.Controllers
         public IActionResult Get()
         {
             var alunos = _repo.GetAllAlunos(true);
-            // var alunosRetorno = new List<AlunoDto>();
 
-            // foreach (var aluno in alunos)
-            // {
-            //     alunosRetorno.Add(
-            //         new AlunoDto()
-            //         {
-            //             Id = aluno.Id
-            //             ,
-            //             Matricula = aluno.Matricula
-            //             ,
-            //             Nome = $"{aluno.Nome} {aluno.SobreNome}"
-            //             ,
-            //             Telefone = aluno.Telefone
-            //             ,
-            //             DataNasc = aluno.DataNasc
-            //             ,
-            //             DataIni = aluno.DataIni
-            //             ,
-            //             Ativo = aluno.Ativo
-            //         });
-            // }
             return Ok(_mapper.Map<IEnumerable<AlunoDto>>(alunos));
         }
         [HttpGet("GetRegister")]

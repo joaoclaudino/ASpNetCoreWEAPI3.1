@@ -4,13 +4,15 @@ using SmartSchool.API.Models;
 using System.Linq;
 using SmartSchool.API.Data;
 using Microsoft.EntityFrameworkCore;
-using SmartSchool.API.Dtos;
+using SmartSchool.API.V1.Dtos;
 using AutoMapper;
 
-namespace SmartSchool.API.Controllers
+namespace SmartSchool.API.V1.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ProfessorController : ControllerBase
     {
         private readonly IRepository _repo;
